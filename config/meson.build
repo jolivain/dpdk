@@ -176,10 +176,10 @@ if not is_ms_compiler
     else
         machine_args += '-march=' + cpu_instruction_set
         # arm manages generic/auto config in config/arm/meson.build
-        if cpu_instruction_set != 'generic' and cpu_instruction_set != 'auto'
-            compiler_arch_support = cc.has_argument('-march=' + cpu_instruction_set)
-        else
+        if host_machine.cpu_family().startswith('aarch')
             compiler_arch_support = true
+        else
+            compiler_arch_support = cc.has_argument('-march=' + cpu_instruction_set)
         endif
     endif
     if not compiler_arch_support
